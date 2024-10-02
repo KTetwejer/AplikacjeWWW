@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;                     
+    padding: 0;                    
+}
+
+/*headery*/
+.mainHeader {
+    color: darkblue;
+    text-align: center;
+    font-size: 55px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+/*tekst*/
+.textBold {
+    margin: 10px;
+    font-size: 25px;
+    font-weight: bold;
+}
+.textHighlited {
+    text-decoration: underline;
+    text-decoration-style: solid;
+    text-underline-offset: 6px;
+}
+
+/*onrazki*/
+.imageResponsive {
+    width: 100%;
+    height: auto;
+}
+
+/* menu */
+nav {
+    background-color: #333;
+}
+
+.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;        /* Ustawia menu w linii */
+}
+
+.menu li {
+    padding: 14px 20px;
+    
+}
+
+.menu li a {
+    color: white;
+    text-decoration: none; /* Usuwa podkreślenie z linków */
+}
+
+.menu li a.active {
+    color: aqua;
+    font-weight: bold;
+}
+
+.menu li a:hover {
+    background-color: #575757; /* Zmienia tło przy najechaniu */
+}
+
+/*tła*/
+
+.backgroundTitle {
+    background-image: url('title-background.jpg'); /* Ścieżka do obrazu */
+    background-size: cover;                   /* Dopasowuje obraz do kontenera */
+    background-position: center;              /* Ustawia obraz w centrum */
+    width: 100%;
+    height: auto;                            /* Wysokość kontenera na 100% widoku */
+    display: flex;                            /* Umożliwia centrowanie zawartości */
+    justify-content: center;                  /* Wyśrodkowuje w poziomie */
+    align-items: center;                      /* Wyśrodkowuje w pionie */
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.6);    /* Czarne tło z 50% przezroczystości */
+    padding: 20px;                            /* Wypełnienie */
+    border-radius: 10px;                      /* Zaokrąglenie rogów */
+    color: cyan;                             /* Kolor tekstu */
+    text-align: center;                       /* Wyśrodkowanie tekstu */
+}
