@@ -144,3 +144,33 @@ nav {
   background-color: #45a049;
 }
 
+.jquery-test {
+  width: 200px;
+  text-align: center;
+  color: #000;
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#jquery-test-click {
+  border: 2px solid rgba(71, 236, 30, 1);
+  background: rgba(71, 236, 30, 0.7);
+}
+
+#jquery-test-hover {
+  border: 2px solid rgb(215, 236, 30);
+  background: rgba(215, 236, 30, 0.7);
+}
+
+#jquery-test-click-multiple {
+  border: 2px solid rgb(30, 81, 236);
+  background: rgba(30, 81, 236, 0.7);
+}
