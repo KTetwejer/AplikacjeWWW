@@ -1,0 +1,176 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: lightsalmon;
+}
+
+/*headery*/
+.mainHeader {
+  color: darkblue;
+  text-align: center;
+  font-size: 55px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+/*tekst*/
+.textBold {
+  margin: 10px;
+  font-size: 25px;
+  font-weight: bold;
+}
+.textHighlited {
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-underline-offset: 6px;
+}
+
+/*onrazki*/
+.imageResponsive {
+  width: 100%;
+  height: auto;
+}
+
+/* menu */
+nav {
+  background-color: #333;
+}
+
+.menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;        /* Ustawia menu w linii */
+}
+
+.menu li {
+  padding: 14px 20px;
+
+}
+
+.menu li a {
+  color: white;
+  text-decoration: none; /* Usuwa podkreślenie z linków */
+}
+
+.menu li a.active {
+  color: aqua;
+  font-weight: bold;
+}
+
+.menu li a:hover {
+  background-color: #575757; /* Zmienia tło przy najechaniu */
+}
+
+/*tła*/
+
+.backgroundTitle {
+  background-image: url('../img/titlebackground1.jpg');
+  background-size: cover;                 /* Dopasowuje obraz do kontenera */
+  background-position: center;            /* Ustawia obraz w centrum */
+  width: 100%;                            /* Szerokość kontenera na 100% */
+  height: 200px;                          /* Ustalona wysokość kontenera */
+  display: flex;                          /* Umożliwia centrowanie zawartości */
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 10px;
+  color: cyan;
+  text-align: center;
+}
+
+/*tabela*/
+.tableNoBorder {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableNoBorder td {
+  padding: 10px;
+  vertical-align: top;
+}
+
+.tableNoBorder tr:nth-child(even) td {
+  background-color: #d9f5f5; /* Jasny cyan */
+}
+
+.tableNoBorder tr:nth-child(odd) td {
+  background-color: #f0f0f0; /* Jasny szary */
+}
+
+.tableNoBorder img {
+  width: 150px;
+  height: auto;
+}
+
+/*formularz*/
+
+.contactForm {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.formTextInput {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.formButton {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.formButton:hover {
+  background-color: #45a049;
+}
+
+.jquery-test {
+  width: 200px;
+  text-align: center;
+  color: #000;
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#jquery-test-click {
+  border: 2px solid rgba(71, 236, 30, 1);
+  background: rgba(71, 236, 30, 0.7);
+}
+
+#jquery-test-hover {
+  border: 2px solid rgb(215, 236, 30);
+  background: rgba(215, 236, 30, 0.7);
+}
+
+#jquery-test-click-multiple {
+  border: 2px solid rgb(30, 81, 236);
+  background: rgba(30, 81, 236, 0.7);
+}
