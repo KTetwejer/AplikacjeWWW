@@ -1,5 +1,5 @@
 <?php
-    require_once "connect.php";
+    require_once "cfg.php";
     require_once "admin_category.php";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["action"])) {
