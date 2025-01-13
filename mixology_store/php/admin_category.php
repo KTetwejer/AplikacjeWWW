@@ -1,6 +1,6 @@
 <?php
 
-require_once 'connect.php';
+require_once 'cfg.php';
 
 function AddCategory($category_name, $mother, $conn) {
 	$stmt = $conn->prepare("INSERT INTO categories (category_name, mother) Values (?, ?)");
