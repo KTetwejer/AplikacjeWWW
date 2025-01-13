@@ -6,9 +6,9 @@ function AddCategory($category_name, $mother, $conn) {
 	$stmt = $conn->prepare("INSERT INTO categories (category_name, mother) Values (?, ?)");
 	$stmt->bind_param("si", $category_name, $mother);
 	if ($stmt->execute()) {
-		echo "Kategoria '$category_name' dodana pomyślnie!<br>";
+		return "Kategoria '$category_name' dodana pomyślnie!";
 	} else {
-		echo "Błąd podczas dodawania kategorii '$category_name'" . $stmt->error . "<br>";
+		return "Błąd podczas dodawania kategorii '$category_name'" . $stmt->error;
 	}
 	$stmt->close();
 }
@@ -24,9 +24,9 @@ function RemoveCategory($category_id, $conn) {
 	$stmt = $conn->prepare("DELETE FROM categories WHERE category_id = ?");
 	$stmt->bind_param("i", $category_id);
 	if ($stmt->execute()) {
-		echo "Kategoria o ID '$category_id' została usunięta!<br>";
+		return "Kategoria o ID '$category_id' została usunięta!";
 	} else {
-		echo "Błąd przy usuwaniu kategorii o ID '$category_id'" . $stmt->error . "<br>";
+		return "Błąd przy usuwaniu kategorii o ID '$category_id'" . $stmt->error;
 	}
 }
 
@@ -47,12 +47,60 @@ function GetCategoryTree($mother=0, $conn) {
 	}
 }
 
-function EditCategory($category_id, $category_name, $mother, $conn) {
-	$stmt = $conn->prepare("UPDATE categories SET category_name = ?, mother = ? WHERE id = ?");
-	$stmt->bind_param("sii", $category_name, $mother, $category_id);
-	if ($stmt->execute()) {
-		echo "Kategoria o ID '$category_id' została zaktualizowana!<br>";
-	} else {
-		echo "Błąd przy aktualizacji kategorii o ID '$category_id'" . $stmt->error . "<br>";
+function EditCategory($category_id, $new_name, $new_mother_id, $conn) {
+	// sprawdzamy, czy kategoria istnieje
+	$sql = "SELECT category_name FROM categories WHERE category_id = ?";
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param("i", $category_id);
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	if ($result->num_rows == 0) {
+		return "Kategoria o podanym ID nie istnieje.";
 	}
+
+	// pobieramy obecną nazwę kategorii
+	$row = $result->fetch_assoc();
+	$current_name = $row['category_name'];
+
+	// jeśli nowa nazwa jest pusta, używamy obecnej nazwy
+	if (empty($new_name)) {
+		$new_name = $current_name;
+	}
+
+	// zabezpieczenie przed ustawieniem kategorii jako własnej matki
+	if ($category_id == $new_mother_id) {
+		return "Kategoria nie może być swoją własną podkategorią.";
+	}
+
+	// zabezpieczenie przed ustawieniem matki jako podkategorii dziecka
+	$current_id = $new_mother_id;
+	while ($current_id != 0) {
+		$sql = "SELECT mother FROM categories WHERE category_id = ?";
+		$stmt = $conn->prepare($sql);
+		$stmt->bind_param("i", $current_id);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		if ($result->num_rows == 0) break;
+
+		$row = $result->fetch_assoc();
+		$current_id = $row['mother'];
+
+		if ($current_id == $category_id) {
+			return "Nie można ustawić tej kategorii jako podkategorii jej własnego dziecka.";
+		}
+	}
+
+	$sql = "UPDATE categories SET category_name = ?, mother = ? WHERE category_id = ?";
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param("sii", $new_name, $new_mother_id, $category_id);
+	$stmt->execute();
+
+	if ($stmt->affected_rows > 0) {
+		return "Kategoria została zaktualizowana.";
+	} else {
+		return "Nie wprowadzono żadnych zmian.";
+	}
+
+
 }
