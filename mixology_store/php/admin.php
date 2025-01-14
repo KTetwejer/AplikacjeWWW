@@ -1,10 +1,24 @@
 <?php
+    session_start();
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: login.php");
+        exit;
+    }
+
     require_once "cfg.php";
     require_once "admin_category.php";
     require_once "admin_products.php";
 
-
+    $message = '';
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["action"])) {
+        if ($_POST["action"] == "logout") {
+            session_unset();
+            session_destroy();
+            $message = "Wylogowano!";
+            header("Location: login.php");
+            exit;
+        }
+
         if ($_POST["action"] == "add_category") {
 			$category_name = $_POST['category_name'];
 			$mother = $_POST['mother'];
@@ -63,6 +77,26 @@
                 exit;
             }
         }
+		else if ($_POST["action"] == "edit_product") {
+            $product_id = $_POST['product_id'];
+			$product_name = $_POST['product_name'];
+			$description = $_POST['description'];
+			$expiration_date = $_POST['expiration_date'];
+			$price_netto = $_POST['price_netto'];
+			$vat = $_POST['vat'];
+			$stock_quantity = $_POST['stock_quantity'];
+			$availability_status  = $_POST['availability_status'];
+			$category_id = $_POST['category_id'];
+			$size  = $_POST['size'];
+			$image_url = $_POST['image_url'];
+
+			$message = EditProduct($product_id, $product_name, $description, $expiration_date, $price_netto, $vat,
+            $stock_quantity, $availability_status, $category_id, $size, $image_url, $conn);
+			if ($message != null) {
+				header("Location: " . $_SERVER['REQUEST_URI']);
+				exit;
+			}
+		}
 
     }
 ?>
@@ -82,6 +116,11 @@
 			<li><a href="shop.php">Sklep</a> </li>
 			<li><a href="cart.php">Koszyk</a></li>
 			<li><a href="admin.php">Panel Administratora</a> </li>
+            <li>
+                <form method="POST" style="display: inline;">
+                    <button type="submit" name="action" value="logout">Wyloguj</button>
+                </form>
+            </li>
 		</ul>
 	</nav>
 
@@ -251,6 +290,70 @@
                     <br><br>
 
                     <button type="submit" name="action" value="remove products">Usuń produkt</button>
+                </form>
+            </div>
+
+            <div>
+                <h3>Edytowanie produktu</h3>
+                <form method="POST">
+                    <label for="product_id">ID produktu</label>
+                    <input type="text" id="product_id" name="product_id" required>
+                    <br><br>
+
+                    <label for="product_name">Nazwa produktu:</label>
+                    <input type="text" id="product_name" name="product_name" required>
+                    <br><br>
+
+                    <label for="description">Opis produktu:</label>
+                    <textarea id="description" name="description"></textarea>
+                    <br><br>
+
+                    <label for="expiration_date">Data ważności:</label>
+                    <input type="date" id="expiration_date" name="expiration_date">
+                    <br><br>
+
+                    <label for="price_netto">Cena netto:</label>
+                    <input type="number" id="price_netto" name="price_netto" step="0.01" required>
+                    <br><br>
+
+                    <label for="vat">VAT:</label>
+                    <input type="number" id="vat" name="vat" step="1" required>
+                    <br><br>
+
+                    <label for="stock_quantity">Ilość sztuk:</label>
+                    <input type="number" id="stock_quantity" name="stock_quantity" required>
+                    <br><br>
+
+                    <label for="availability_status">Dostępność</label>
+                    <select id="availability_status" name="availability_status">
+                        <option value="TRUE">Dostępny</option>
+                        <option value="FALSE">Niedostępny</option>
+                    </select>
+                    <br><br>
+
+                    <label for="category_id">Kategoria:</label>
+                    <select id="category_id" name="category_id">
+						<?php
+						$sql = "SELECT category_id, category_name FROM categories";
+						$result = $conn->query($sql);
+						if ($result->num_rows > 0) {
+							while ($row = $result->fetch_assoc()) {
+								echo '<option value="' . $row["category_id"] . '">' . $row["category_name"] . '</option>';
+							}
+						}
+						?>
+                    </select>
+                    <br><br>
+
+                    <label for="size">Gabaryt:</label>
+                    <input type="text" id="size" name="size">
+                    <br><br>
+
+                    <label for="image_url">URL zdjęcia:</label>
+                    <input type="text" id="image_url" name="image_url">
+                    <br><br>
+
+                    <button type="submit" name="action" value="edit_product">Edytuj Produkt</button>
                 </form>
             </div>
             </div>
