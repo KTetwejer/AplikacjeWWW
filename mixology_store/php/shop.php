@@ -6,7 +6,6 @@ require_once 'admin_category.php';
 require_once 'admin_products.php';
 require_once 'admin_cart.php';
 
-// Poprawienie błędu z literówką w $SESSION
 if (!isset($_SESSION['cart'])) {
 	$_SESSION['cart'] = [];
 }
@@ -15,7 +14,11 @@ if (!isset($_SESSION['cart'])) {
 if (isset($_POST['add_to_cart'])) {
 	$product_id = $_POST['product_id'];
 	$quantity = $_POST['quantity'];
-	AddToCart($product_id, $quantity);
+	$message = AddToCart($product_id, $quantity);
+    if ($message == null) {
+        header("Location: " . $_SERVER['REQUEST_URI']);
+        exit;
+    }
 }
 ?>
 
@@ -28,10 +31,10 @@ if (isset($_POST['add_to_cart'])) {
 </head>
 
 <body>
-<nav>
+<nav class="menu">
     <ul>
         <li><a href="index.php">Strona Główna</a></li>
-        <li><a href="shop.php">Sklep</a> </li>
+        <li><a href="shop.php" class="active">Sklep</a> </li>
         <li><a href="cart.php">Koszyk</a></li>
         <li><a href="admin.php">Panel Administratora</a> </li>
     </ul>

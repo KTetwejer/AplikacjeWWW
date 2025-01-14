@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	<meta name="author" content="Konrad Tetwejer">
 	<link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body class="centerColumn">
 <h1>Logowanie</h1>
 <form method="POST" autocomplete="off">
 	<label for="username">Nazwa użytkownika:</label>

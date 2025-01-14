@@ -52,12 +52,13 @@ function ShowProducts($conn) {
 
 	while ($row = $result->fetch_assoc()) {
 		echo "<div>";
-		echo "<h3>" . htmlspecialchars($row['product_name']) . "</h3>";
+		// Zmieniamy nazwę produktu na link do strony szczegółów
+		echo "<h3><a href='product_details.php?product_id=" . $row['product_id'] . "'>" . htmlspecialchars($row['product_name']) . "</a></h3>";
 		echo "<p>" . htmlspecialchars($row['description']) . "</p>";
 		echo "<p>Cena brutto: " . number_format($row['price_netto'] * (1 + $row['vat'] / 100), 2) . " PLN</p>";
 		echo "<p>Dostępnych sztuk: " . htmlspecialchars($row['stock_quantity']) . "</p>";
 		echo "<p>Kategoria: " . htmlspecialchars($row['category_name']) . "</p>";
-		echo "<p><img src='" . htmlspecialchars($row['image_url']) . "' alt='Zdjęcie produktu'></p>";
+		echo "<p><img src='" . htmlspecialchars($row['image_url']) . "' alt='Zdjęcie produktu' style='width: 13%; height: 13%'></p>";
 
 		// Dodajemy formularz do dodania produktu do koszyka
 		echo "<form method='post' action='shop.php'>
@@ -69,4 +70,3 @@ function ShowProducts($conn) {
 		echo "</div><hr>";
 	}
 }
-?>

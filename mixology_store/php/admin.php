@@ -110,12 +110,12 @@
 </head>
 
 <body>
-	<nav>
+	<nav class="menu">
 		<ul>
 			<li><a href="index.php">Strona Główna</a></li>
 			<li><a href="shop.php">Sklep</a> </li>
 			<li><a href="cart.php">Koszyk</a></li>
-			<li><a href="admin.php">Panel Administratora</a> </li>
+			<li><a href="admin.php" class="active">Panel Administratora</a> </li>
             <li>
                 <form method="POST" style="display: inline;">
                     <button type="submit" name="action" value="logout">Wyloguj</button>
@@ -124,8 +124,8 @@
 		</ul>
 	</nav>
 
-    <div>
-        <h1>Panel administratora</h1>
+    <div style="margin: 2%">
+        <h1 class="overlay" style="padding: 2%">Panel administratora</h1>
         <div>
             <h2>Zarządzanie kategoriami</h2>
             <?php GetCategoryTree(0, $conn); ?>
@@ -251,8 +251,8 @@
 
                     <label for="availability_status">Dostępność</label>
                     <select id="availability_status" name="availability_status">
-                        <option value="TRUE">Dostępny</option>
-                        <option value="FALSE">Niedostępny</option>
+                        <option value=0>Niedostępny</option>
+                        <option value=1>Dostępny</option>
                     </select>
                     <br><br>
 
@@ -326,8 +326,8 @@
 
                     <label for="availability_status">Dostępność</label>
                     <select id="availability_status" name="availability_status">
-                        <option value="TRUE">Dostępny</option>
-                        <option value="FALSE">Niedostępny</option>
+                        <option value=1>Dostępny</option>
+                        <option value=0>Niedostępny</option>
                     </select>
                     <br><br>
 
@@ -355,6 +355,7 @@
 
                     <button type="submit" name="action" value="edit_product">Edytuj Produkt</button>
                 </form>
+                <br><br>
             </div>
             </div>
         </div>
