@@ -58,6 +58,14 @@ function ShowProducts($conn) {
 		echo "<p>Dostępnych sztuk: " . htmlspecialchars($row['stock_quantity']) . "</p>";
 		echo "<p>Kategoria: " . htmlspecialchars($row['category_name']) . "</p>";
 		echo "<p><img src='" . htmlspecialchars($row['image_url']) . "' alt='Zdjęcie produktu'></p>";
+
+		// Dodajemy formularz do dodania produktu do koszyka
+		echo "<form method='post' action='shop.php'>
+                <input type='hidden' name='product_id' value='" . $row['product_id'] . "' />
+                <input type='number' name='quantity' value='1' min='1' max='" . $row['stock_quantity'] . "' />
+                <button type='submit' name='add_to_cart'>Dodaj do koszyka</button>
+              </form>";
+
 		echo "</div><hr>";
 	}
 }
