@@ -24,7 +24,6 @@ function RemoveProduct($product_id, $conn) {
 
 function EditProduct($product_id, $product_name, $description, $expiration_date, $price_net, $vat, $stock_quantity, $availability_status, $category_id, $size, $image_url, $conn) {
 
-	//sprawdzenie, czy produkt o podanym ID istnieje
 	$sql = "SELECT product_name FROM products WHERE product_id = ?";
 	$stmt = $conn->prepare($sql);
 	$stmt->bind_param("i", $product_id);
@@ -36,8 +35,7 @@ function EditProduct($product_id, $product_name, $description, $expiration_date,
 	}
 
 	$stmt = $conn->prepare("UPDATE products 
-                            SET product_name = ?, description = ?, expiration_date = ?, price_netto = ?, vat = ?, stock_quantity = ?, availability_status = ?, category_id = ?, size = ?, image_url = ? 
-                            WHERE product_id = ?");
+                            SET product_name = ?, description = ?, expiration_date = ?, price_netto = ?, vat = ?, stock_quantity = ?, availability_status = ?, category_id = ?, size = ?, image_url = ? WHERE product_id = ?");
 
 	$stmt->bind_param("sssddiiissi", $product_name, $description, $expiration_date, $price_net, $vat, $stock_quantity, $availability_status, $category_id, $size, $image_url, $product_id);
 	$stmt->execute();
@@ -52,7 +50,6 @@ function ShowProducts($conn) {
 
 	while ($row = $result->fetch_assoc()) {
 		echo "<div>";
-		// Zmieniamy nazwę produktu na link do strony szczegółów
 		echo "<h3><a href='product_details.php?product_id=" . $row['product_id'] . "'>" . htmlspecialchars($row['product_name']) . "</a></h3>";
 		echo "<p>" . htmlspecialchars($row['description']) . "</p>";
 		echo "<p>Cena brutto: " . number_format($row['price_netto'] * (1 + $row['vat'] / 100), 2) . " PLN</p>";
@@ -60,7 +57,6 @@ function ShowProducts($conn) {
 		echo "<p>Kategoria: " . htmlspecialchars($row['category_name']) . "</p>";
 		echo "<p><img src='" . htmlspecialchars($row['image_url']) . "' alt='Zdjęcie produktu' style='width: 13%; height: 13%'></p>";
 
-		// Dodajemy formularz do dodania produktu do koszyka
 		echo "<form method='post' action='shop.php'>
                 <input type='hidden' name='product_id' value='" . $row['product_id'] . "' />
                 <input type='number' name='quantity' value='1' min='1' max='" . $row['stock_quantity'] . "' />

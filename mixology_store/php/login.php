@@ -15,7 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if ($result->num_rows > 0) {
 		$user = $result->fetch_assoc();
 
-		// Jeśli hasło jest już zapisane w kolumnie `password_hash`
 		if (!empty($user['password_hash']) && password_verify($password, $user['password_hash'])) {
 			$_SESSION['user_id'] = $user['user_id'];
 			$_SESSION['username'] = $user['username'];
@@ -23,7 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			exit();
 		}
 
-		// Jeśli hasło jest zapisane w zwykłym tekście
 		if ($password == $user['password']) {
 			// migracja hasła do wersji hashowanej
 			$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -33,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$updateStmt->bind_param("si", $hashedPassword, $user['user_id']);
 			$updateStmt->execute();
 
-			// Logowanie użytkownika
 			$_SESSION['user_id'] = $user['user_id'];
 			$_SESSION['username'] = $user['username'];
 			header('Location: admin.php');
@@ -56,23 +53,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	<link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="centerColumn">
-<h1>Logowanie</h1>
-<form method="POST" autocomplete="off">
-	<label for="username">Nazwa użytkownika:</label>
-	<input type="text" id="username" name="username" required>
-	<br><br>
+    <h1>Logowanie</h1>
+    <form method="POST" autocomplete="off">
+        <label for="username">Nazwa użytkownika:</label>
+        <input type="text" id="username" name="username" required>
+        <br><br>
 
-	<label for="password">Hasło:</label>
-	<input type="password" id="password" name="password" required>
-	<br><br>
+        <label for="password">Hasło:</label>
+        <input type="password" id="password" name="password" required>
+        <br><br>
 
-	<button type="submit">Zaloguj się</button>
-</form>
+        <button type="submit">Zaloguj się</button>
+    </form>
 
-<?php
-if (isset($error_message)) {
-	echo "<p style='color: red;'>" . htmlspecialchars($error_message) . "</p>";
-}
-?>
+    <?php
+    if (isset($error_message)) {
+        echo "<p style='color: red;'>" . htmlspecialchars($error_message) . "</p>";
+    }
+    ?>
 </body>
 </html>

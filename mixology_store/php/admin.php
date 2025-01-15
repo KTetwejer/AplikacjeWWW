@@ -361,7 +361,7 @@
         </div>
 	</div>
 
-    <!-- Modal for Errors -->
+    <!-- Modal do obsługi błędów -->
     <div id="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border: 1px solid #ccc; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); z-index: 1000;">
         <p id="message"></p>
         <button onclick="closeModal()">Zamknij</button>

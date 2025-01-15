@@ -48,7 +48,6 @@ function GetCategoryTree($mother=0, $conn) {
 }
 
 function EditCategory($category_id, $new_name, $new_mother_id, $conn) {
-	// sprawdzamy, czy kategoria istnieje
 	$sql = "SELECT category_name FROM categories WHERE category_id = ?";
 	$stmt = $conn->prepare($sql);
 	$stmt->bind_param("i", $category_id);
@@ -59,21 +58,17 @@ function EditCategory($category_id, $new_name, $new_mother_id, $conn) {
 		return "Kategoria o podanym ID nie istnieje.";
 	}
 
-	// pobieramy obecną nazwę kategorii
 	$row = $result->fetch_assoc();
 	$current_name = $row['category_name'];
 
-	// jeśli nowa nazwa jest pusta, używamy obecnej nazwy
 	if (empty($new_name)) {
 		$new_name = $current_name;
 	}
 
-	// zabezpieczenie przed ustawieniem kategorii jako własnej matki
 	if ($category_id == $new_mother_id) {
 		return "Kategoria nie może być swoją własną podkategorią.";
 	}
 
-	// zabezpieczenie przed ustawieniem matki jako podkategorii dziecka
 	$current_id = $new_mother_id;
 	while ($current_id != 0) {
 		$sql = "SELECT mother FROM categories WHERE category_id = ?";

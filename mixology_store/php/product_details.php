@@ -26,19 +26,17 @@ if (isset($_GET['product_id'])) {
 	<link rel="stylesheet" href="../css/style.css"/>
 </head>
 <body>
-<nav class="menu">
-	<ul>
-		<li><a href="index.php">Strona Główna</a></li>
-		<li><a href="shop.php">Sklep</a> </li>
-		<li><a href="cart.php">Koszyk</a></li>
-		<li><a href="admin.php">Panel Administratora</a> </li>
-	</ul>
-</nav>
-<?php
-		// Wyświetlamy szczegóły produktu
+    <nav class="menu">
+        <ul>
+            <li><a href="index.php">Strona Główna</a></li>
+            <li><a href="shop.php">Sklep</a> </li>
+            <li><a href="cart.php">Koszyk</a></li>
+            <li><a href="admin.php">Panel Administratora</a> </li>
+        </ul>
+    </nav>
+    <?php
 		echo "<h1>" . htmlspecialchars($row['product_name']) . "</h1>";
 
-		// Wyświetlanie wszystkich informacji o produkcie
 		echo "<p><strong>Opis:</strong> " . nl2br(htmlspecialchars($row['description'])) . "</p>";
 		echo "<p><strong>Data modyfikacji:</strong> " . htmlspecialchars($row['modification_date']) . "</p>";
 		echo "<p><strong>Data ważności:</strong> " . htmlspecialchars($row['expiration_date']) . "</p>";
@@ -52,7 +50,6 @@ if (isset($_GET['product_id'])) {
 		echo "<p><strong>Rozmiar:</strong> " . htmlspecialchars($row['size']) . "</p>";
 		echo "<p><strong>Obraz produktu:</strong><br><img src='" . htmlspecialchars($row['image_url']) . "' alt='Zdjęcie produktu' width='300'></p>";
 
-		// Formularz dodania produktu do koszyka
 		echo "<form method='post' action='shop.php'>
                 <input type='hidden' name='product_id' value='" . $row['product_id'] . "' />
                 <input type='number' name='quantity' value='1' min='1' max='" . $row['stock_quantity'] . "' />
@@ -63,8 +60,8 @@ if (isset($_GET['product_id'])) {
 	}
 
 	$stmt->close();
-} else {
+    } else {
 	echo "<p>Brak produktu do wyświetlenia.</p>";
 }
-?>
+    ?>
 </body>
